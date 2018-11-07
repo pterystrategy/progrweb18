@@ -54,8 +54,9 @@ INSERT INTO `tbAcesso` (`idAcesso`, `descricao`, `menu`, `arquivo`, `tipo`, `idA
 (12, 'Relatórios', 'Relatórios', '#', 'subMenu', NULL),
 (13, 'Relatório de Estoque por Categoria', 'Estoque por Categoria', 'RelatorioProdutoCategoriaFormulario.php', 'itemSubMenu', 12),
 (14, 'Relatório de Usuários por Grupo de Acesso', 'Usuários por Grupo de Acesso', '#', 'itemSubMenu', 12),
-(15, 'Relatório de Pedidos por Usuário', 'Pedidos por Usuário', '#', 'itemSubMenu', 12);
-
+(15, 'Relatório de Pedidos por Usuário', 'Pedidos por Usuário', '#', 'itemSubMenu', 12),
+(16, 'Tabela Venda', 'Venda', 'VendaTabela.php', 'menu', NULL),
+(17, 'Formulario de Venda', 'Venda', 'VendaFormulario.php', 'formulario', NULL);
 -- --------------------------------------------------------
 
 --
@@ -155,6 +156,17 @@ INSERT INTO `tbGrupoAcesso` (`idGrupoAcesso`, `idGrupo`, `idAcesso`, `permissao`
 (34, 1, 15, 2);
 
 -- --------------------------------------------------------
+--
+-- Estrutura da tabela `tbvenda`
+--
+
+CREATE TABLE `tbvenda` (
+  `id` int(11) NOT NULL,
+  `cliente` varchar(255) NOT NULL,
+  `cpf` varchar(25) NOT NULL,
+  `dataVenda` date NOT NULL,
+  `total` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Estrutura da tabela `tbPedido`
