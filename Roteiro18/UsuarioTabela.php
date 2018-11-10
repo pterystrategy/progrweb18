@@ -181,13 +181,13 @@
 									<label for="idGrupo">Grupo de Usuários</label>
 									<select id="idGrupo" name="idGrupo" class="form-control">						  
 										<?php
-											$grupoDAO = new GrupoDAO();
-											$lista = $grupoDAO->listar();
+											$vendaDAO = new GrupoDAO();
+											$lista = $vendaDAO->listar();
 
 											echo "<option value='0' disabled selected>Selecione um grupo de acesso</option>";
 											
-											foreach($lista as $grupo){	
-												echo "<option value='{$grupo->getIdGrupo()}'>{$grupo->getDescricao()}</option>";
+											foreach($lista as $venda){	
+												echo "<option value='{$venda->getIdGrupo()}'>{$venda->getDescricao()}</option>";
 											}
 										?>	
 								

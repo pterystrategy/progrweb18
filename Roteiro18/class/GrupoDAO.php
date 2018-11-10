@@ -1,228 +1,214 @@
-<?php	
-	require_once 'CrudDAO.php';
-	require_once 'Grupo.php';
+<?php
 
-	class GrupoDAO extends CrudDAO
-	{
+require_once 'CrudDAO.php';
+require_once 'Grupo.php';
 
-		public function salvar($grupo){	
-			$situacao = FALSE;
-			try{
-				
-				if($grupo->getIdGrupo()==0){
+class GrupoDAO extends CrudDAO {
 
-					$situacao = $this->incluir($grupo);
+    public function salvar($grupo) {
+        $situacao = FALSE;
+        try {
 
-				}else{	
-					$situacao = $this->atualizar($grupo);
-				}
+            if ($grupo->getIdGrupo() == 0) {
 
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}			
+                $situacao = $this->incluir($grupo);
+            } else {
+                $situacao = $this->atualizar($grupo);
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        }
 
-			return $situacao;
-		}
+        return $situacao;
+    }
 
-		public function incluir($grupo){	
-			$situacao = FALSE;
-			try{
-				
-				$pdo = parent::conectar();
+    public function incluir($grupo) {
+        $situacao = FALSE;
+        try {
 
-				$sql = "INSERT INTO tbGrupo(descricao) VALUES (:descricao)";
+            $pdo = parent::conectar();
 
-				$run = $pdo->prepare($sql);
-				$run->bindValue(':descricao', $grupo->getDescricao(), PDO::PARAM_STR); 
-	  			$run->execute(); 
+            $sql = "INSERT INTO tbGrupo(descricao) VALUES (:descricao)";
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
+            $run = $pdo->prepare($sql);
+            $run->bindValue(':descricao', $grupo->getDescricao(), PDO::PARAM_STR);
+            $run->execute();
 
-				$grupo->setIdGrupo($pdo->lastInsertId());
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}		
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
 
-			return $situacao;
-		}
+            $grupo->setIdGrupo($pdo->lastInsertId());
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-		public function atualizar($grupo){	
-			$situacao = FALSE;
-			try{
-				
-				$pdo = parent::conectar();
-					
-				$sql = "UPDATE tbGrupo SET descricao = :descricao WHERE idGrupo = :idGrupo";
+        return $situacao;
+    }
 
-				$run = $pdo->prepare($sql);
-	  			$run->bindValue(':descricao', $grupo->getDescricao(), PDO::PARAM_STR);
-	  			$run->bindValue(':idGrupo', $grupo->getIdGrupo(), PDO::PARAM_INT);				
-				$run->execute(); 
+    public function atualizar($grupo) {
+        $situacao = FALSE;
+        try {
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}			
+            $pdo = parent::conectar();
 
-			return $situacao;
-		}						
+            $sql = "UPDATE tbGrupo SET descricao = :descricao WHERE idGrupo = :idGrupo";
 
-		public function excluir($grupo){
+            $run = $pdo->prepare($sql);
+            $run->bindValue(':descricao', $grupo->getDescricao(), PDO::PARAM_STR);
+            $run->bindValue(':idGrupo', $grupo->getIdGrupo(), PDO::PARAM_INT);
+            $run->execute();
 
-			$situacao = FALSE;
-			try{
-				
-				$pdo = parent::conectar();	
-					
-				$sql = "DELETE FROM tbGrupo WHERE idGrupo = :idGrupo";
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-				$run = $pdo->prepare($sql);
-	  			$run->bindValue(':idGrupo', $grupo->getIdGrupo(), PDO::PARAM_INT);			
-				$run->execute(); 
+        return $situacao;
+    }
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}			
+    public function excluir($grupo) {
 
-			return $situacao;
+        $situacao = FALSE;
+        try {
 
-		}
+            $pdo = parent::conectar();
 
-		public function excluirPorId($codigo){
+            $sql = "DELETE FROM tbGrupo WHERE idGrupo = :idGrupo";
 
-			$situacao = FALSE;
-			try{
-				
-				$pdo = parent::conectar();	
-					
-				$sql = "DELETE FROM tbGrupo WHERE idGrupo = :idGrupo";
+            $run = $pdo->prepare($sql);
+            $run->bindValue(':idGrupo', $grupo->getIdGrupo(), PDO::PARAM_INT);
+            $run->execute();
 
-				$run = $pdo->prepare($sql);
-	  			$run->bindValue(':idGrupo', $codigo, PDO::PARAM_INT);			
-				$run->execute(); 
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}			
+        return $situacao;
+    }
 
-			return $situacao;
+    public function excluirPorId($codigo) {
 
-		}					
+        $situacao = FALSE;
+        try {
 
-		public function listar(){
+            $pdo = parent::conectar();
 
-			$objetos = array();	
+            $sql = "DELETE FROM tbGrupo WHERE idGrupo = :idGrupo";
 
-			try{
-				
-				$pdo = parent::conectar();
-					
-				$sql = "SELECT * FROM tbGrupo";
+            $run = $pdo->prepare($sql);
+            $run->bindValue(':idGrupo', $codigo, PDO::PARAM_INT);
+            $run->execute();
 
-				$run = $pdo->prepare($sql);			
-				$run->execute(); 
-				$resultado = $run->fetchAll();
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-				foreach ($resultado as $registro){
+        return $situacao;
+    }
 
-					$grupo = new Grupo();
-					$grupo->setIdGrupo($registro['idGrupo']);
-					$grupo->setDescricao($registro['descricao']);
-					array_push($objetos, $grupo);
-				}	
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}		
+    public function listar() {
 
-			return $objetos;
+        $objetos = array();
 
-		}			
-		
-		public function buscarPorId($codigo){
+        try {
 
-			$grupo = new Grupo();
-						
-			try{
+            $pdo = parent::conectar();
 
-				$pdo = parent::conectar();
+            $sql = "SELECT * FROM tbGrupo";
 
-				$sql = "SELECT * FROM tbGrupo WHERE idGrupo = :idGrupo";
+            $run = $pdo->prepare($sql);
+            $run->execute();
+            $resultado = $run->fetchAll();
 
-				$run = $pdo->prepare($sql);
-	  			$run->bindValue(':idGrupo', $codigo, PDO::PARAM_INT);			
-				$run->execute(); 
-				$registro = $run->fetch();
+            foreach ($resultado as $registro) {
 
-				$grupo->setIdGrupo($registro['idGrupo']);
-				$grupo->setDescricao($registro['descricao']);
+                $grupo = new Grupo();
+                $grupo->setIdGrupo($registro['idGrupo']);
+                $grupo->setDescricao($registro['descricao']);
+                array_push($objetos, $grupo);
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}
-			
-			return $grupo;
-		}	
+        return $objetos;
+    }
 
+    public function buscarPorId($codigo) {
 
-		public function filtrar($descricao){
+        $grupo = new Grupo();
 
-			$objetos = array();	
+        try {
 
-			try{
-				
-				$pdo = parent::conectar();
-					
-				$sql = "SELECT * FROM tbGrupo WHERE descricao LIKE '%{$descricao}%'";
+            $pdo = parent::conectar();
 
-				$run = $pdo->prepare($sql);			
-				$run->execute(); 
-				$resultado = $run->fetchAll();
+            $sql = "SELECT * FROM tbGrupo WHERE idGrupo = :idGrupo";
 
-				foreach ($resultado as $registro){
+            $run = $pdo->prepare($sql);
+            $run->bindValue(':idGrupo', $codigo, PDO::PARAM_INT);
+            $run->execute();
+            $registro = $run->fetch();
 
-					$grupo = new Grupo();
-					$grupo->setIdGrupo($registro['idGrupo']);
-					$grupo->setDescricao($registro['descricao']);
-					array_push($objetos, $grupo);
-				}	
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}		
+            $grupo->setIdGrupo($registro['idGrupo']);
+            $grupo->setDescricao($registro['descricao']);
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-			return $objetos;
+        return $grupo;
+    }
 
-		}			
+    public function filtrar($descricao) {
 
-	}
-	
-?> 
+        $objetos = array();
+
+        try {
+
+            $pdo = parent::conectar();
+
+            $sql = "SELECT * FROM tbGrupo WHERE descricao LIKE '%{$descricao}%'";
+
+            $run = $pdo->prepare($sql);
+            $run->execute();
+            $resultado = $run->fetchAll();
+
+            foreach ($resultado as $registro) {
+
+                $grupo = new Grupo();
+                $grupo->setIdGrupo($registro['idGrupo']);
+                $grupo->setDescricao($registro['descricao']);
+                array_push($objetos, $grupo);
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
+
+        return $objetos;
+    }
+
+}
+
+?>

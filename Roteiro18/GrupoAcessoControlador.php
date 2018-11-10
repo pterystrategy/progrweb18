@@ -2,7 +2,7 @@
 
 	require_once 'class/GrupoAcessoDAO.php';
 	$grupoAcessoDAO = new GrupoAcessoDAO();
-	$grupoDAO = new GrupoDAO();
+	$vendaDAO = new GrupoDAO();
 	$acessoDAO = new AcessoDAO();
 	$grupoAcesso = new GrupoAcesso();
 
@@ -12,10 +12,10 @@
 	{
         case 'salvar':
 
-			$grupo = $grupoDAO->buscarPorId($_POST["idGrupo"]);
+			$venda = $vendaDAO->buscarPorId($_POST["idGrupo"]);
 			$acesso = $acessoDAO->buscarPorId($_POST["idAcesso"]);
 
-			$grupoAcesso->setGrupo($grupo);
+			$grupoAcesso->setGrupo($venda);
 			$grupoAcesso->setAcesso($acesso);
 			$grupoAcesso->setPermissao($_POST["permissao"]);
 			

@@ -5,9 +5,9 @@
 
 	$operacao = $_GET["operacao"];
 	$usuarioDAO = new UsuarioDAO();
-	$grupoDAO = new GrupoDAO();
+	$vendaDAO = new GrupoDAO();
 	$usuario = new Usuario();
-	$grupo = new Grupo();
+	$venda = new Grupo();
 
 	switch($operacao) 
 	{
@@ -25,8 +25,8 @@
 			move_uploaded_file($foto["tmp_name"],"imagens/".$fotoNome);		
 			$usuario->setFoto($fotoNome);
 				
-			$grupo = $grupoDAO->buscarPorId($_POST["idGrupo"]);
-			$usuario->setGrupo($grupo);
+			$venda = $vendaDAO->buscarPorId($_POST["idGrupo"]);
+			$usuario->setGrupo($venda);
 
 			$resultado = $usuarioDAO->salvar($usuario);
 

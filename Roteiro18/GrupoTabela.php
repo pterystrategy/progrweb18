@@ -56,32 +56,32 @@
 				<tbody>
 					<?php
 	
-						$grupoDAO = new GrupoDAO();
+						$vendaDAO = new GrupoDAO();
 
 						if(isset($_GET["operacao"])=="filtrar"){
 
-							$descricao = "";
+							$cliente = "";
 							
 							if(isset($_POST["descricao"])){
-								$descricao =  $_POST["descricao"];
+								$cliente =  $_POST["descricao"];
 							}
 
-							$lista = $grupoDAO->filtrar($descricao);	
+							$lista = $vendaDAO->filtrar($cliente);	
 
 						}else{
-							$lista = $grupoDAO->listar();	
+							$lista = $vendaDAO->listar();	
 						}
 						
 
-						foreach($lista as $grupo){						
+						foreach($lista as $venda){						
 							echo"<tr>";			
-							echo"<td>{$grupo->getDescricao()}</td>";
+							echo"<td>{$venda->getDescricao()}</td>";
 
 							if($permissao == 2){													
 														
-								echo"<td><button type='button' class='btn btn-danger excluir' id='{$grupo->getIdGrupo()}'>excluir</button></td>";	
+								echo"<td><button type='button' class='btn btn-danger excluir' id='{$venda->getIdGrupo()}'>excluir</button></td>";	
 
-								echo"<td> <a class='btn btn-success' href='GrupoFormulario.php?operacao=editar&idGrupo={$grupo->getIdGrupo()}'> editar </a> </td>";
+								echo"<td> <a class='btn btn-success' href='GrupoFormulario.php?operacao=editar&idGrupo={$venda->getIdGrupo()}'> editar </a> </td>";
 
 							}else{
 								echo"<td></td>";
@@ -89,7 +89,7 @@
 							}
 
 
-							echo"<td> <a class='btn btn-secondary' href='GrupoFormulario.php?operacao=visualizar&idGrupo={$grupo->getIdGrupo()}'> visualizar </a> </td>";								
+							echo"<td> <a class='btn btn-secondary' href='GrupoFormulario.php?operacao=visualizar&idGrupo={$venda->getIdGrupo()}'> visualizar </a> </td>";								
 
 							echo"</tr>";							
 						}						

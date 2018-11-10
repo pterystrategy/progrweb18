@@ -56,11 +56,11 @@
 						$categoriaDAO = new CategoriaDAO();
 						
 						if(isset($_GET["operacao"])=="filtrar"){							
-							$descricao = "";							
+							$cliente = "";							
 							if(isset($_POST["descricao"])){
-								$descricao = $_POST["descricao"];
+								$cliente = $_POST["descricao"];
 							}
-							$lista = $categoriaDAO->filtrar($descricao);
+							$lista = $categoriaDAO->filtrar($cliente);
 						}else{
 							$lista = $categoriaDAO->listar();
 						}

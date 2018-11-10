@@ -1,7 +1,7 @@
 <?php
 
 	require_once 'class/GrupoDAO.php';
-	$grupoDAO = new GrupoDAO();
+	$vendaDAO = new GrupoDAO();
 	
 
 	$operacao = $_GET["operacao"];
@@ -10,14 +10,14 @@
 	{
         case 'salvar':
 
-			$grupo = new Grupo();
+			$venda = new Grupo();
 
-			$grupo->setIdGrupo($_POST["idGrupo"]);
-			$grupo->setDescricao($_POST["descricao"]);
-			$resultado = $grupoDAO->salvar($grupo);
+			$venda->setIdGrupo($_POST["idGrupo"]);
+			$venda->setDescricao($_POST["descricao"]);
+			$resultado = $vendaDAO->salvar($venda);
 
 			if(isset($_POST["salvar"])){		
-				$pagina = "GrupoFormulario.php?operacao=editar&idGrupo={$grupo->getIdGrupo()}";
+				$pagina = "GrupoFormulario.php?operacao=editar&idGrupo={$venda->getIdGrupo()}";
 			}else{
 				if(isset($_POST["salvarVoltar"])){
 					$pagina = "GrupoTabela.php";
@@ -35,7 +35,7 @@
 
         case 'excluir':
 			
-			$resultado = $grupoDAO->excluirPorId($_GET["idGrupo"]);
+			$resultado = $vendaDAO->excluirPorId($_GET["idGrupo"]);
 
 			if($resultado == 1){
 				echo "<script>alert('Registro excluido com sucesso !!!'); location.href='GrupoTabela.php';</script>"; 

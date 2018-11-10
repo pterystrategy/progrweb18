@@ -1,41 +1,34 @@
-	<?php	
-	require_once 'CrudDAO.php';
-	require_once 'UsuarioDAO.php';
-	require_once './Venda.php';
+<?php
 
-	class PedidoDAO extends CrudDAO
-	{
+require_once 'CrudDAO.php';
+require_once './Venda.php';
 
-		public function salvar($venda){	
-			$situacao = FALSE;
-			try{
-				
-				if($venda->getId()==0){
+class VendaDAO extends CrudDAO {
 
-					$situacao = $this->incluir($venda);
+    public function salvar($venda) {
+        $situacao = FALSE;
+        try {
 
-				}else{	
-					$situacao = $this->atualizar($venda);
-				}
+            if ($venda->getIdGrupo() == 0) {
 
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}			
+                $situacao = $this->incluir($venda);
+            } else {
+                $situacao = $this->atualizar($venda);
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        }
 
-			return $situacao;
-		}
+        return $situacao;
+    }
 
-		public function incluir($venda){	
-			$situacao = FALSE;
+    public function incluir($venda) {
+        $situacao = FALSE;
+        try {
 
-			try{
-				
-				
-            $pdo = Banco::conectar();
+            $pdo = parent::conectar();
 
             $sql = "INSERT INTO tbVenda (cliente, cpf, dataVenda, total) VALUES (:cliente, :cpf, :dataVenda, :total)";
-            $run = $pdo->prepare($sql);
-
 
             $run->bindParam(':cliente', $venda->getCliente(), PDO::PARAM_STR);
             $run->bindParam(':cpf', $venda->getCpf(), PDO::PARAM_STR);
@@ -44,26 +37,25 @@
 
             $run->execute();
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
-				
-				$venda->setId($pdo->lastInsertId());
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}		
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
 
-			return $situacao;
-		}
+            $venda->setId($pdo->lastInsertId());
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-		public function atualizar($venda){	
-			$situacao = FALSE;
-			try{
-	/* @var $pdo type */
-            $pdo = Banco::conectar();
+        return $situacao;
+    }
+
+    public function atualizar($grupo) {
+        $situacao = FALSE;
+        try {
+
+            $pdo = parent::conectar();
 
             $sql = "UPDATE tbVenda SET cliente = :cliente, cpf = :cpf, dataVenda = :dataVenda, total = :total  WHERE  id = :id";
             $run = $pdo->prepare($sql);
@@ -75,25 +67,24 @@
             $run->bindParam(':total', $venda->getTotal(), PDO::PARAM_INT);
             $run->execute();
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}			
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-			return $situacao;
-		}						
+        return $situacao;
+    }
 
-		public function excluir($pedido){
+    public function excluir($grupo) {
 
-			$situacao = FALSE;
-			try{
-				    $pdo = Banco::conectar();
+        $situacao = FALSE;
+        try {
 
+            $pdo = parent::conectar();
             $sql = "DELETE FROM tbVenda WHERE id = :id";
 
 
@@ -101,27 +92,24 @@
             $run->bindParam(':id', $venda->getId(), PDO::PARAM_INT);
             $run->execute();
 
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}			
+        return $situacao;
+    }
 
-			return $situacao;
+    public function excluirPorId($codigo) {
 
-		}
+        $situacao = FALSE;
+        try {
 
-		public function excluirPorId($codigo){
-			
-			$situacao = FALSE;
-			try{
-				
-				 $pdo = Banco::conectar();
+            $pdo = parent::conectar();
 
             $sql = "DELETE FROM tbVenda WHERE id = :id";
 
@@ -129,27 +117,25 @@
             $run->bindParam(':id', $codigo, PDO::PARAM_INT);
             $run->execute();
 
-				if($run->rowCount() > 0){
-					$situacao = TRUE;
-				}
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}			
+            if ($run->rowCount() > 0) {
+                $situacao = TRUE;
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
 
-			return $situacao;
+        return $situacao;
+    }
 
-		}					
-
-		public function listar() {
+    public function listar() {
 
         $objetos = array();
 
         try {
 
-            $pdo = Banco::conectar();
+            $pdo = parent::conectar();
 
             $sql = "SELECT * FROM tbVenda";
 
@@ -170,16 +156,19 @@
         } catch (Exception $ex) {
             echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
         } finally {
-            Banco::desconectar();
+            parent::desconectar();
         }
 
         return $objetos;
     }
-		public function buscarPorId($codigo) {
+
+    public function buscarPorId($codigo) {
+
+        $venda = new Venda();
 
         try {
 
-            $pdo = Banco::conectar();
+            $pdo = parent::conectar();
 
             $sql = "SELECT * FROM tbVenda WHERE id = :id";
 
@@ -187,7 +176,6 @@
             $run->bindParam(':id', $codigo, PDO::PARAM_INT);
             $run->execute();
             $resultado = $run->fetch();
-            $venda = new Venda();
             $venda->setId($resultado['id']);
             $venda->setCliente($resultado['cliente']);
             $venda->setCpf($resultado['cpf']);
@@ -196,57 +184,45 @@
         } catch (Exception $ex) {
             echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
         } finally {
-            Banco::desconectar();
+            parent::desconectar();
         }
 
         return $venda;
     }
-		public function filtrar($venda){
 
-			$objetos = array();	
+    public function filtrar($descricao) {
 
-			try{
-				
-				$pdo = parent::conectar();
-					
-				$sql = "SELECT DISTINCT ped.idPedido, ped.idUsuario, ped.dataPedido
-                        FROM tbPedido AS ped 
-                        LEFT JOIN tbUsuario AS usu ON ped.idUsuario = usu.idUsuario 
-                        LEFT JOIN tbPedidoProduto AS pedpro ON ped.idPedido = pedpro.idPedido  
-                        LEFT JOIN tbProduto AS pro ON pedpro.idProduto = pro.idProduto  
-                        WHERE 
-                            IFNULL(pro.nome, '') LIKE '%{$produto}%'     
-                        AND usu.nome LIKE '%{$usuario}%' 
-                        AND dataPedido BETWEEN IFNULL({$dataInicio}, dataPedido) AND IFNULL({$dataFim}, dataPedido);";
+        $objetos = array();
 
-				$run = $pdo->prepare($sql);			
-				$run->execute(); 
-				$resultado = $run->fetchAll();
+        try {
 
-				foreach ($resultado as $registro){
+            $pdo = parent::conectar();
 
-					$pedido = new Pedido();
-					$pedido->setIdPedido($registro['idPedido']);
-					
-					$usuarioDAO = new UsuarioDAO();
-					$usuario = $usuarioDAO->buscarPorId($registro['idUsuario']);
-					$pedido->setUsuario($usuario);
-					$pedido->setDataPedido($registro['dataPedido']);
-					
-									
-					array_push($objetos, $pedido);
-				}	
-				
-			}catch(Exception $ex){
-				echo $ex->getFile().' : '.$ex->getLine().' : '.$ex->getMessage();
-			}finally {
-				parent::desconectar();
-			}		
+            $sql = "SELECT * FROM tbVenda WHERE descricao LIKE '%{$descricao}%'";
 
-			return $objetos;
+            $run = $pdo->prepare($sql);
+            $run->execute();
+            $registro = $run->fetchAll();
 
-		}					
+            foreach ($registro as $registro) {
 
-	}
-	
-?> 
+                $grupo = new Grupo();
+                $venda->setId($registro['id']);
+                $venda->setCliente($registro['cliente']);
+                $venda->setCpf($registro['cpf']);
+                $venda->setDataVenda($registro['dataVenda']);
+                $venda->setTotal($registro['total']);
+                array_push($objetos, $grupo);
+            }
+        } catch (Exception $ex) {
+            echo $ex->getFile() . ' : ' . $ex->getLine() . ' : ' . $ex->getMessage();
+        } finally {
+            parent::desconectar();
+        }
+
+        return $objetos;
+    }
+
+}
+
+?>

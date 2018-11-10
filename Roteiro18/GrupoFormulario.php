@@ -7,7 +7,7 @@
 	require_once 'class/AcessoDAO.php';
 	require_once 'class/GrupoAcessoDAO.php';
 	
-	$grupo = new Grupo();
+	$venda = new Grupo();
 	
 	$operacao = "visualizar";
 
@@ -19,8 +19,8 @@
 		
 		$idGrupo = $_GET["idGrupo"];
 
-		$grupoDAO = new GrupoDAO();
-		$grupo = $grupoDAO->buscarPorId($idGrupo);
+		$vendaDAO = new GrupoDAO();
+		$venda = $vendaDAO->buscarPorId($idGrupo);
 	}
 			
 ?>
@@ -57,8 +57,8 @@
 					<div class="row form-group">
 						<div class="col-md-12">
 							<label for="descricao">Descrição</label>  
-							<input type="hidden" name="idGrupo" id="idGrupo" value="<?php echo $grupo->getIdGrupo() ?>" >
-							<input class="form-control campo" name="descricao" id="descricao" type="text" value="<?php echo $grupo->getDescricao() ?>" >
+							<input type="hidden" name="idGrupo" id="idGrupo" value="<?php echo $venda->getIdGrupo() ?>" >
+							<input class="form-control campo" name="descricao" id="descricao" type="text" value="<?php echo $venda->getDescricao() ?>" >
 
 						</div>
 					</div>	
@@ -87,7 +87,7 @@
 			</form >	
 
 			<?php 
-				if($grupo->getIdGrupo()==0){
+				if($venda->getIdGrupo()==0){
 					echo "<div class='ocultar'>";
 				}
 			?>
@@ -96,7 +96,7 @@
 
 					<fieldset <?php if($operacao=="visualizar"){echo 'disabled';} ?> >
 					
-						<input type="hidden" name="idGrupo" id="idGrupo" value="<?php echo $grupo->getIdGrupo() ?>" >
+						<input type="hidden" name="idGrupo" id="idGrupo" value="<?php echo $venda->getIdGrupo() ?>" >
 
 						<div class="row form-group">
 							<div class="col-md-6">
@@ -153,10 +153,10 @@
 							</thead>
 							<tbody>
 								<?php
-									if($grupo->getIdGrupo()!=0){
+									if($venda->getIdGrupo()!=0){
 
 										$grupoAcessoDAO = new GrupoAcessoDAO();
-										$lista = $grupoAcessoDAO->listarPorGrupo($grupo->getIdGrupo());
+										$lista = $grupoAcessoDAO->listarPorGrupo($venda->getIdGrupo());
 
 										foreach($lista as $grupoAcesso){						
 											echo"<tr>";	
@@ -184,7 +184,7 @@
 				</div>	
 
 			<?php 
-				if($grupo->getIdGrupo()==0){
+				if($venda->getIdGrupo()==0){
 					echo "</div>";
 					//fechamento da div do segundo formulário
 				}

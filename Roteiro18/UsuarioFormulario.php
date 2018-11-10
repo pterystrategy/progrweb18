@@ -103,20 +103,20 @@
 							
 							<select id="idGrupo" name="idGrupo" class="form-control" required>						  
 								<?php
-									$grupoDAO = new GrupoDAO();
-									$lista = $grupoDAO->listar();
+									$vendaDAO = new GrupoDAO();
+									$lista = $vendaDAO->listar();
 
 									if($usuario->getGrupo()->getIdGrupo() == 0){
 										echo "<option value='' disabled selected>Selecione um grupo de acesso</option>";
 									}
 
-									foreach($lista as $grupo){	
+									foreach($lista as $venda){	
 
-										if($grupo->getIdGrupo() == $usuario->getGrupo()->getIdGrupo()){
-											echo "<option selected value='{$grupo->getIdGrupo()}'>{$grupo->getDescricao()}</option>";
+										if($venda->getIdGrupo() == $usuario->getGrupo()->getIdGrupo()){
+											echo "<option selected value='{$venda->getIdGrupo()}'>{$venda->getDescricao()}</option>";
 										}
 										else{
-											echo "<option value='{$grupo->getIdGrupo()}'>{$grupo->getDescricao()}</option>";
+											echo "<option value='{$venda->getIdGrupo()}'>{$venda->getDescricao()}</option>";
 										}
 										
 									}

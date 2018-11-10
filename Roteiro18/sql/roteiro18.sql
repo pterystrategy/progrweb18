@@ -156,18 +156,53 @@ INSERT INTO `tbGrupoAcesso` (`idGrupoAcesso`, `idGrupo`, `idAcesso`, `permissao`
 (34, 1, 15, 2);
 
 -- --------------------------------------------------------
+
 --
--- Estrutura da tabela `tbvenda`
+-- Table structure for table `tbVenda`
 --
 
-CREATE TABLE `tbvenda` (
+CREATE TABLE `tbVenda` (
   `id` int(11) NOT NULL,
-  `cliente` varchar(255) NOT NULL,
-  `cpf` varchar(25) NOT NULL,
+  `cliente` varchar(225) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
   `dataVenda` date NOT NULL,
-  `total` decimal(10,2) NOT NULL
+  `total` decimal(9,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tbVenda`
+--
+
+INSERT INTO `tbVenda` (`id`, `cliente`, `cpf`, `dataVenda`, `total`) VALUES
+(28, 'pedro', '08312361677', '2018-10-27', '12.00'),
+(29, 'pedr0', '08312361677', '2018-10-27', '12.00'),
+(30, 'pedr8', '08312361677', '2018-10-27', '12.00'),
+(31, 'gabriel', '08312361677', '2018-10-27', '12.00');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbVenda`
+--
+ALTER TABLE `tbVenda`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbVenda`
+--
+ALTER TABLE `tbVenda`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--------------------------------------------------------------------
 --
 -- Estrutura da tabela `tbPedido`
 --
