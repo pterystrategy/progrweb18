@@ -4,7 +4,7 @@ class Banco {
 
     private static $dbNome = 'roteiro18';
     private static $dbHost = 'localhost';
-    private static $dbUsuario = 'root';
+    private static $dbUsuario = 'phpmyadmin';
     private static $dbSenha = 'toor';
     private static $conexao = null;
 

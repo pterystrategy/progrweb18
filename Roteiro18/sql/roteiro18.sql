@@ -20,12 +20,61 @@ SET time_zone = "+00:00";
 -- Database: `roteiro18`
 --
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbVenda`
+--
+
+CREATE TABLE `tbVenda` (
+  `id` int(11) NOT NULL,
+  `cliente` varchar(225) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `dataVenda` date NOT NULL,
+  `total` decimal(9,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbVenda`
+--
+
+INSERT INTO `tbVenda` (`id`, `cliente`, `cpf`, `dataVenda`, `total`) VALUES
+(28, 'pedro', '08312361677', '2018-10-27', '12.00'),
+(29, 'pedr0', '08312361677', '2018-10-27', '12.00'),
+(30, 'pedr8', '08312361677', '2018-10-27', '12.00'),
+(31, 'gabriel', '08312361677', '2018-10-27', '12.00');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbVenda`
+--
+ALTER TABLE `tbVenda`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbVenda`
+--
+ALTER TABLE `tbVenda`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--------------------------------------------------------------------
+
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `tbAcesso`
 --
-
 CREATE TABLE IF NOT EXISTS `tbAcesso` (
 `idAcesso` int(11) NOT NULL,
   `descricao` varchar(255) CHARACTER SET latin1 NOT NULL,
@@ -51,12 +100,13 @@ INSERT INTO `tbAcesso` (`idAcesso`, `descricao`, `menu`, `arquivo`, `tipo`, `idA
 (9, 'Formulário de Produtos', 'Produto', 'ProdutoFormulario.php', 'formulario', NULL),
 (10, 'Tabela de Pedidos', 'Pedido', 'PedidoTabela.php', 'menu', NULL),
 (11, 'Formulário de Pedidos', 'Pedido', 'PedidoFormulario.php', 'formulario', NULL),
-(12, 'Relatórios', 'Relatórios', '#', 'subMenu', NULL),
-(13, 'Relatório de Estoque por Categoria', 'Estoque por Categoria', 'RelatorioProdutoCategoriaFormulario.php', 'itemSubMenu', 12),
-(14, 'Relatório de Usuários por Grupo de Acesso', 'Usuários por Grupo de Acesso', '#', 'itemSubMenu', 12),
-(15, 'Relatório de Pedidos por Usuário', 'Pedidos por Usuário', '#', 'itemSubMenu', 12),
-(16, 'Tabela Venda', 'Venda', 'VendaTabela.php', 'menu', NULL),
-(17, 'Formulario de Venda', 'Venda', 'VendaFormulario.php', 'formulario', NULL);
+(12, 'Tabela de Venda', 'Venda', 'VendaTabela.php', 'menu', NULL),
+(13, 'Formulário de Venda', 'Venda', 'VendaFormulario.php', 'formulario', NULL),
+(14, 'Relatórios', 'Relatórios', '#', 'subMenu', NULL),
+(15, 'Relatório de Estoque por Categoria', 'Estoque por Categoria', 'RelatorioProdutoCategoriaFormulario.php', 'itemSubMenu', 14),
+(16, 'Relatório de Usuários por Grupo de Acesso', 'Usuários por Grupo de Acesso', '#', 'itemSubMenu', 14),
+(17, 'Relatório de Pedidos por Usuário', 'Pedidos por Usuário', '#', 'itemSubMenu', 14);
+
 -- --------------------------------------------------------
 
 --
@@ -157,52 +207,6 @@ INSERT INTO `tbGrupoAcesso` (`idGrupoAcesso`, `idGrupo`, `idAcesso`, `permissao`
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `tbVenda`
---
-
-CREATE TABLE `tbVenda` (
-  `id` int(11) NOT NULL,
-  `cliente` varchar(225) NOT NULL,
-  `cpf` varchar(14) NOT NULL,
-  `dataVenda` date NOT NULL,
-  `total` decimal(9,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `tbVenda`
---
-
-INSERT INTO `tbVenda` (`id`, `cliente`, `cpf`, `dataVenda`, `total`) VALUES
-(28, 'pedro', '08312361677', '2018-10-27', '12.00'),
-(29, 'pedr0', '08312361677', '2018-10-27', '12.00'),
-(30, 'pedr8', '08312361677', '2018-10-27', '12.00'),
-(31, 'gabriel', '08312361677', '2018-10-27', '12.00');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tbVenda`
---
-ALTER TABLE `tbVenda`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tbVenda`
---
-ALTER TABLE `tbVenda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
---------------------------------------------------------------------
 --
 -- Estrutura da tabela `tbPedido`
 --

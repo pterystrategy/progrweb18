@@ -2,17 +2,18 @@
 
 require_once 'class/VendaDAO.php';
 $vendaDAO = new VendaDAO();
-
+$venda = new Venda();
 
 $operacao = $_GET["operacao"];
 
 switch ($operacao) {
     case 'salvar':
 
-        $venda = new Venda();
-
         $venda->setId($_POST["id"]);
-        $venda->setDescricao($_POST["descricao"]);
+        $venda->setCliente($_POST["cliente"]);
+        $venda->setCpf($_POST["cpf"]);
+        $venda->setDataVenda($_POST["dataVenda"]);
+        $musica->setTotal($_POST["total"]);
         $resultado = $vendaDAO->salvar($venda);
 
         if (isset($_POST["salvar"])) {
@@ -29,7 +30,6 @@ switch ($operacao) {
             echo "<script>alert('Erro ao salvar o registro'); location.href='{$pagina}';</script>";
         }
 
-
         break;
 
     case 'excluir':
@@ -43,4 +43,4 @@ switch ($operacao) {
         }
         break;
 }
-?>
+
