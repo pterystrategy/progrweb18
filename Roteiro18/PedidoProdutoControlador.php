@@ -1,49 +1,53 @@
 <?php
 
-	require_once 'class/PedidoProdutoDAO.php';
-	$pedidoProdutoDAO = new PedidoProdutoDAO();
-	$pedidoDAO = new PedidoDAO();
-	$produtoDAO = new ProdutoDAO();
-	
+require_once 'class/PedidoProdutoDAO.php';
+$pedidoProdutoDAO = new PedidoProdutoDAO();
+$pedidoDAO = new PedidoDAO();
+$produtoDAO = new ProdutoDAO();
 
-	$operacao = $_GET["operacao"];
 
-	switch($operacao) 
-	{
-        case 'salvar':
+$operacao = $_GET["operacao"];
 
-			$pedidoProduto = new PedidoProduto();
+switch ($operacao) {
+    case 'salvar':
 
-			$pedido = $pedidoDAO->buscarPorId($_POST["idPedido"]);
-			$produto = $produtoDAO->buscarPorId($_POST["idProduto"]);
+        $pedidoProduto = new PedidoProduto();
 
-			$pedidoProduto->setPedido($pedido);
-			$pedidoProduto->setProduto($produto);
-			$pedidoProduto->setQuantidade($_POST["quantidade"]);
-			$pedidoProduto->setValor($_POST["valor"]);
-			
-			
-			$resultado = $pedidoProdutoDAO->salvar($pedidoProduto);
+        $pedido = $pedidoDAO->buscarPorId($_POST["idPedido"]);
+        $produto = $produtoDAO->buscarPorId($_POST["idProduto"]);
+        
+        $quantidade = $_POST["quantidade"];
+        $valor = $_POST["valor"];
+        
+        $total = ($quantidade * $valor);
+        
+        $pedidoProduto->setPedido($pedido);
+        $pedidoProduto->setProduto($produto);
+        $pedidoProduto->setQuantidade($quantidade);
+        $pedidoProduto->setValor($valor);
+        $pedidoProduto->setTotal($total);
 
-			if($resultado == 1){
-				echo "<script>location.href='PedidoFormulario.php?operacao=editar&idPedido={$_POST["idPedido"]}';</script>"; 
-			}else{
-				echo "<script>alert('Erro ao salvar o registro'); location.href='PedidoFormulario.php?operacao=editar&idPedido={$_POST["idPedido"]}';</script>"; 			
-			}
 
-        	break; 
+        $resultado = $pedidoProdutoDAO->salvar($pedidoProduto);
 
-        case 'excluir':
-			
-			$idPedido = $_GET["idPedido"];
-			$resultado = $pedidoProdutoDAO->excluirPorId($_GET["idPedidoProduto"]);
+        if ($resultado == 1) {
+            echo "<script>location.href='PedidoFormulario.php?operacao=editar&idPedido={$_POST["idPedido"]}';</script>";
+        } else {
+            echo "<script>alert('Erro ao salvar o registro'); location.href='PedidoFormulario.php?operacao=editar&idPedido={$_POST["idPedido"]}';</script>";
+        }
 
-			if($resultado == 1){
-				echo "<script>alert('Registro excluido com sucesso !!!'); location.href='PedidoFormulario.php?operacao=editar&idPedido={$idPedido}';</script>"; 
-			}else{
-				echo "<script>alert('Erro ao excluir o registro'); location.href='PedidoFormulario.php?operacao=editar&idPedido={$idPedido}';</script>"; 			
-			}			
-        	break;         	
-	}
-			
+        break;
+
+    case 'excluir':
+
+        $idPedido = $_GET["idPedido"];
+        $resultado = $pedidoProdutoDAO->excluirPorId($_GET["idPedidoProduto"]);
+
+        if ($resultado == 1) {
+            echo "<script>alert('Registro excluido com sucesso !!!'); location.href='PedidoFormulario.php?operacao=editar&idPedido={$idPedido}';</script>";
+        } else {
+            echo "<script>alert('Erro ao excluir o registro'); location.href='PedidoFormulario.php?operacao=editar&idPedido={$idPedido}';</script>";
+        }
+        break;
+}
 ?>

@@ -5,9 +5,9 @@
 
 	$operacao = $_GET["operacao"];
 	$produtoDAO = new ProdutoDAO();
-	$categoriaDAO = new CategoriaDAO();
+	$musicaDAO = new CategoriaDAO();
 	$produto = new Produto();
-	$categoria = new Categoria();
+	$musica = new Categoria();
 
 	switch($operacao) 
 	{
@@ -24,8 +24,8 @@
 			move_uploaded_file($foto["tmp_name"],"imagens/".$fotoNome);		
 			$produto->setFoto($fotoNome);
 			
-			$categoria = $categoriaDAO->buscarPorId($_POST['idCategoria']);
-			$produto->setCategoria($categoria);
+			$musica = $musicaDAO->buscarPorId($_POST['idCategoria']);
+			$produto->setCategoria($musica);
 			
 			$resultado = $produtoDAO->salvar($produto);
 	

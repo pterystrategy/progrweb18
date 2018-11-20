@@ -71,19 +71,19 @@
 						<label for="idCategoria">Categoria</label>
 						<select id="idCategoria" name="idCategoria" class="form-control" required>						  
 							<?php
-								$categoriaDAO = new CategoriaDAO();
-								$lista = $categoriaDAO->listar();
+								$musicaDAO = new CategoriaDAO();
+								$lista = $musicaDAO->listar();
 
 								if($produto->getIdProduto() == 0){
 									echo "<option value='' disabled selected>Selecione uma categoria</option>";
 								}
 
-								foreach($lista as $categoria){	
-									if($produto->getCategoria() == $categoria->getIdCategoria()){
-										echo "<option selected value='{$categoria->getIdCategoria()}'>{$categoria->getDescricao()}</option>";
+								foreach($lista as $musica){	
+									if($produto->getCategoria() == $musica->getIdCategoria()){
+										echo "<option selected value='{$musica->getIdCategoria()}'>{$musica->getDescricao()}</option>";
 									}
 									else{
-										echo "<option value='{$categoria->getIdCategoria()}'>{$categoria->getDescricao()}</option>";
+										echo "<option value='{$musica->getIdCategoria()}'>{$musica->getDescricao()}</option>";
 									}
 								}
 							?>	
